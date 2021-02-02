@@ -1,0 +1,30 @@
+{
+  /* Your mod name and authors */
+  "name": "Deli Example Mod",
+  "authors": [
+    "Nathan Gill"
+  ],
+  
+  /* Your mod GUID and version */
+  "guid": "deli_example_mod",
+  "version": "1.0.0.0",
+  
+  /**
+   * Dependencies are a Dict<string,string> of mod GUID, version.
+   * Newer versions of a dependency will be okay as long as it's
+   * still the same major version (e.g deli.core 0.* would be allowed here and 1.* would not)
+   */
+  "dependencies": {
+    "deli.core": "0.0.0.0"
+  },
+  
+  /**
+   * Assets are another Dict<string,string> of paths and loader names
+   * The path can be either a file, folder or any format valid for use with the given loader
+   * Assets are resolved top down, so generally you'll want your assembly first.
+   */
+  "runtime": {
+    "DeliExampleMod.dll": "assembly",
+    "Resources/ExampleAsset1.txt": "example_asset"
+  }
+}
