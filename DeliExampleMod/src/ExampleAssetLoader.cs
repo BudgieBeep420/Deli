@@ -1,7 +1,7 @@
 ﻿using ADepIn;
 using Deli;
 
-namespace DeliExampleMod
+/*namespace DeliExampleMod
 {
     // Asset loaders are the classes that when bound, will be run to load an asset that specifies the same loader name
     // In this case, we'll use the name 'example_b64_asset' and load the asset from json as our struct
@@ -16,5 +16,10 @@ namespace DeliExampleMod
             // Switch on the severity and log the message from the logger of the mod that contains the asset
             mod.Logger.LogInfo(asset.Message);
         }
+
+        public void LoadAsset(IServiceKernel kernel, Deli.Mod mod, string path)
+        {
+            throw new System.NotImplementedException();
+        }
     }
-}
+}*/
