@@ -1,7 +1,7 @@
 ﻿using ADepIn;
 using Deli;
 
-/*namespace DeliExampleMod
+/*namespace BetterTNHCrates
 {
     // Asset loaders are the classes that when bound, will be run to load an asset that specifies the same loader name
     // In this case, we'll use the name 'example_b64_asset' and load the asset from json as our struct

@@ -1,7 +1,7 @@
 ﻿using Deli;
 using UnityEngine;
 
-namespace DeliExampleMod
+namespace BetterTNHCrates
 {
     // Deli Mods are just mono behaviours that get added to a global game object when the game first starts.
     // Generally you want to put your setup code in Awake()

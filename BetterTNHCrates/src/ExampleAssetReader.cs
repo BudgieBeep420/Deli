@@ -1,7 +1,7 @@
 ﻿using System.Text;
 using Deli;
 
-namespace DeliExampleMod
+namespace BetterTNHCrates
 {
     // Asset readers are classes which allow you to easily read a resource from a mod as a certain type.
     // In this case, we make an asset reader for our ExampleAsset

@@ -1,4 +1,4 @@
-﻿namespace DeliExampleMod
+﻿namespace BetterTNHCrates
 {
     // This is the format of our example asset. It has a message and a severity.
     public struct ExampleJsonAsset
