@@ -140,6 +140,14 @@ namespace BetterTNHCrates
             magazineArray = IM.OD.Values
                 .Where(x => x.Category == FVRObject.ObjectCategory.Magazine)
                 .ToArray();
+            
+            /*Finds the current character */
+            var gameManager = FindObjectOfType<TNH_Manager>();
+            var currentCharacter = gameManager.C;
+            
+            Debug.Log("Current character: " + currentCharacter.DisplayName);
+
+            Debug.Log("Here is the first object in the table defs: " + currentCharacter.EquipmentPool.Entries[0].TableDef.name);
         }
         
         /*Debug*/
