@@ -85,42 +85,12 @@ namespace BetterTNHCrates
             var attachmentRand = Random.Range(0f, 1f);
             var magazineRand = Random.Range(0f, 1f);
             var weaponRand = Random.Range(0f, 1f);
-
-            if (attachmentRand <= attachmentProb.Value)
-            {
-                var lengthOfAttachmentArray = attachmentArray.Length;
-                var attachment = Instantiate(attachmentArray[Random.Range(0, lengthOfAttachmentArray + 1)].GetGameObject());
-                attachment.transform.position = __instance.transform.position;
-            }
             
-            if (weaponRand <= weaponProb.Value)
-            {
-                var lengthOfArray = weaponArray.Length;
-                var boxPosition = __instance.transform.position;
-                var weaponFVRObject = weaponArray[Random.Range(0, lengthOfArray + 1)];
-                var weapon = Instantiate(weaponFVRObject.GetGameObject());
+            var boxPosition = __instance.transform.position; 
 
-                weapon.transform.position = boxPosition;
-
-                /* 50/50 chance it spawns a compatible mag as well */
-
-                if (Random.Range(0, 2) == 1)
-                {
-                    var compatibleMags = weaponFVRObject.CompatibleMagazines;
-                    var magazineFVRObject = compatibleMags[Random.Range(0, compatibleMags.Count + 1)];
-                    
-                    var magazine = Instantiate(magazineFVRObject.GetGameObject());
-                    
-                    magazine.transform.position = boxPosition;
-                }
-            }
-            
-            if (magazineRand <= magazineProb.Value)
-            {
-                var lengthOfArray = magazineArray.Length;
-                var magazine = Instantiate(magazineArray[Random.Range(0, lengthOfArray + 1)].GetGameObject());
-                magazine.transform.position = __instance.transform.position;
-            }
+            if (attachmentRand <= attachmentProb.Value) GenerateAttachment(boxPosition);
+            if (weaponRand <= weaponProb.Value) GenerateWeapon(boxPosition);
+            if (magazineRand <= magazineProb.Value) GenerateSingleMagazine(boxPosition);
         }
 
         [HarmonyPatch(typeof(TNH_Manager), "Start")]
@@ -180,5 +150,49 @@ namespace BetterTNHCrates
                 }
             }
         }*/
+
+        private static IEnumerator SpawnObject(Vector3 boxPosition, FVRObject fvrObject)
+        {
+            Debug.Log("IEnum has fired");
+            var objectCallBack = fvrObject.GetGameObjectAsync();
+            yield return new WaitUntil(() => objectCallBack.IsCompleted);
+            
+            var magazine = Instantiate(objectCallBack.Result);
+                    
+            magazine.transform.position = boxPosition;
+            
+        }
+
+        private static void GenerateAttachment(Vector3 boxPosition)
+        {
+            var lengthOfAttachmentArray = attachmentArray.Length;
+            var attachment = Instantiate(attachmentArray[Random.Range(0, lengthOfAttachmentArray + 1)].GetGameObject());
+            attachment.transform.position = boxPosition;
+        }
+
+        private static void GenerateWeapon(Vector3 boxPosition)
+        {
+            var lengthOfArray = weaponArray.Length;
+            var weaponFVRObject = weaponArray[Random.Range(0, lengthOfArray + 1)];
+            var weapon = Instantiate(weaponFVRObject.GetGameObject());
+
+            weapon.transform.position = boxPosition;
+
+            if (Random.Range(0, 2) == 1) return; /* 50% Chance of spawning a magazine with the gun */
+            
+            var compatibleMags = weaponFVRObject.CompatibleMagazines;
+            var magazineFVRObject = compatibleMags[Random.Range(0, compatibleMags.Count + 1)];
+            
+            Debug.Log("Getting Object");
+
+            AnvilManager.Run(SpawnObject(boxPosition, magazineFVRObject));
+        }
+
+        private static void GenerateSingleMagazine(Vector3 boxPosition)
+        {
+            var lengthOfArray = magazineArray.Length;
+            var magazine = Instantiate(magazineArray[Random.Range(0, lengthOfArray + 1)].GetGameObject());
+            magazine.transform.position = boxPosition;
+        }
     }
 }
