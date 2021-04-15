@@ -160,7 +160,6 @@ namespace BetterTNHCrates
             var magazine = Instantiate(objectCallBack.Result);
                     
             magazine.transform.position = boxPosition;
-            
         }
 
         private static void GenerateAttachment(Vector3 boxPosition)
@@ -173,6 +172,7 @@ namespace BetterTNHCrates
         private static void GenerateWeapon(Vector3 boxPosition)
         {
             var lengthOfArray = weaponArray.Length;
+            Debug.Log("weapon array length:" + weaponArray.Length);
             var weaponFVRObject = weaponArray[Random.Range(0, lengthOfArray + 1)];
             var weapon = Instantiate(weaponFVRObject.GetGameObject());
 
@@ -180,14 +180,18 @@ namespace BetterTNHCrates
 
             if (Random.Range(0, 2) == 1) return; /* 50% Chance of spawning a magazine with the gun */
             
-            var compatibleMags = weaponFVRObject.CompatibleMagazines;
-            var magazineFVRObject = compatibleMags[Random.Range(0, compatibleMags.Count + 1)];
+            /*var compatibleMags = weaponFVRObject.CompatibleMagazines;
+            
+            Debug.Log("magazine array lenght" + compatibleMags.Count);
+            var magazineFVRObject = compatibleMags[Random.Range(0, compatibleMags.Count + 1)];*/
+
+            var randomCompatibleMag = weaponFVRObject.GetRandomAmmoObject(weaponFVRObject);
             
             Debug.Log("Getting Object");
 
-            AnvilManager.Run(SpawnObject(boxPosition, magazineFVRObject));
+            AnvilManager.Run(SpawnObject(boxPosition, randomCompatibleMag));
         }
-
+        
         private static void GenerateSingleMagazine(Vector3 boxPosition)
         {
             var lengthOfArray = magazineArray.Length;
